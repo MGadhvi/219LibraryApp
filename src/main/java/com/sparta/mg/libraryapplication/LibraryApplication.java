@@ -17,8 +17,12 @@ public class LibraryApplication {
 
     Logger logger = Logger.getLogger("AHHHH");
 
-    @Autowired
+    final
     AuthorRepository repository;
+
+    public LibraryApplication(AuthorRepository repository) {
+        this.repository = repository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(LibraryApplication.class, args);
