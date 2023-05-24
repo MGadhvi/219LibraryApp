@@ -1,8 +1,8 @@
 package com.sparta.mg.libraryapplication;
 
-import com.sparta.mg.libraryapplication.model.AuthorRepository;
+import com.sparta.mg.libraryapplication.model.repositories.AuthorRepository;
+import com.sparta.mg.libraryapplication.model.repositories.BookRepository;
 import com.sparta.mg.libraryapplication.service.AuthorService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class LibraryApplicationTests {
 
     @Autowired
-    AuthorRepository repository;
+    AuthorRepository authorRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Autowired
     AuthorService service;
@@ -23,18 +26,30 @@ class LibraryApplicationTests {
     @Test
     @DisplayName("Check for all author")
     void checkForAllAuthor() {
-        assertEquals("Manish", repository.findById(1).get().getFullName());
+        assertEquals("Manish", authorRepository.findById(1).get().getFullName());
     }
 
     @Test
     @DisplayName("Check for author by name")
     void checkForAuthorByName() {
-        assertEquals("Manish",repository.findByNameSQL("Manish").get().getFullName());
+        assertEquals("Manish", authorRepository.findByNameSQL("Manish").get().getFullName());
     }
 
     @Test
     @DisplayName("Check For Author Name Length")
     void checkForAuthorNameLength() {
         assertEquals(6,service.getLengthOfAuthorName(1));
+    }
+
+    @Test
+    @DisplayName("Print Book")
+    void printBook() {
+        bookRepository.findById(2).ifPresent(System.out::println);
+    }
+
+    @Test
+    @DisplayName("Print Author")
+    void printAuthor() {
+        authorRepository.findByNameSQL("Manish").ifPresent(authorDTO -> System.out.println(authorDTO.getBooks()));
     }
 }

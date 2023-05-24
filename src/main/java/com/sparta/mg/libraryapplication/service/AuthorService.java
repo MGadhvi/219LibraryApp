@@ -1,6 +1,6 @@
 package com.sparta.mg.libraryapplication.service;
 
-import com.sparta.mg.libraryapplication.model.AuthorRepository;
+import com.sparta.mg.libraryapplication.model.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

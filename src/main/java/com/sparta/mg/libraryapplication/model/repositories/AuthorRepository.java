@@ -1,5 +1,6 @@
-package com.sparta.mg.libraryapplication.model;
+package com.sparta.mg.libraryapplication.model.repositories;
 
+import com.sparta.mg.libraryapplication.model.dtos.AuthorDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
