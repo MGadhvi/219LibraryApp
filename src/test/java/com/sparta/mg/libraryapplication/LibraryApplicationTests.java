@@ -1,5 +1,6 @@
 package com.sparta.mg.libraryapplication;
 
+import com.sparta.mg.libraryapplication.model.dtos.AuthorDTO;
 import com.sparta.mg.libraryapplication.model.repositories.AuthorRepository;
 import com.sparta.mg.libraryapplication.model.repositories.BookRepository;
 import com.sparta.mg.libraryapplication.service.AuthorService;
@@ -7,6 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -52,4 +56,13 @@ class LibraryApplicationTests {
     void printAuthor() {
         authorRepository.findByNameSQL("Manish").ifPresent(authorDTO -> System.out.println(authorDTO.getBooks()));
     }
+
+    @Test
+    @DisplayName("test author endpoint")
+    void testAuthorEndpoint() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<AuthorDTO> response = restTemplate.getForEntity("http://localhost:5000/author/1", AuthorDTO.class);
+        assertEquals(HttpStatusCode.valueOf(200),response.getStatusCode());
+    }
+
 }

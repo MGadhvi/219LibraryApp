@@ -1,5 +1,6 @@
 package com.sparta.mg.libraryapplication.controller;
 
+import com.sparta.mg.libraryapplication.exceptions.AuthorDTONotFoundException;
 import com.sparta.mg.libraryapplication.model.dtos.AuthorDTO;
 import com.sparta.mg.libraryapplication.model.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,18 @@ public class AuthorController {
     }
 
     @GetMapping("/author")
-    public AuthorDTO getAuthorByNameParam(@RequestParam(name = "name")String name) {
-        return authorRepository.findByNameSQL(name).orElseThrow(() -> AuthorDTONotFoundException(id));
+    public AuthorDTO getAuthorByNameParam(@RequestParam(name = "name")String name) throws AuthorDTONotFoundException {
+        return authorRepository.findByNameSQL(name).orElseThrow(() -> new AuthorDTONotFoundException(name));
+    }
+
+    @PutMapping("/author/{id}")
+    public AuthorDTO replaceAuthorById(@RequestBody AuthorDTO authorDTO, @PathVariable Integer id) {
+        if (authorRepository.findById(id).isPresent()) {
+            AuthorDTO oldAuthorDTO = authorRepository.findById(id).get();
+            oldAuthorDTO.setFullName(authorDTO.getFullName());
+            return authorRepository.save(oldAuthorDTO);
+        } else {
+            return authorRepository.save(authorDTO);
+        }
     }
 }
