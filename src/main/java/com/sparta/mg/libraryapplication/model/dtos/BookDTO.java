@@ -1,5 +1,6 @@
 package com.sparta.mg.libraryapplication.model.dtos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.mg.libraryapplication.model.dtos.AuthorDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -17,6 +18,7 @@ public class BookDTO {
     private String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinColumn(name = "author_id")
     private AuthorDTO author;
 
@@ -58,7 +60,6 @@ public class BookDTO {
         return "BookDTO{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author=" + author +
                 '}';
     }
 }

@@ -51,6 +51,7 @@ public class AuthorDTO {
         return "AuthorDTO{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
+                ", books=" + books +
                 '}';
     }
 }
