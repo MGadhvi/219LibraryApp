@@ -3,10 +3,7 @@ package com.sparta.mg.libraryapplication.controller;
 import com.sparta.mg.libraryapplication.model.dtos.AuthorDTO;
 import com.sparta.mg.libraryapplication.model.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,15 @@ public class AuthorController {
     @PostMapping("/author")
     public AuthorDTO addAuthor(@RequestBody AuthorDTO authorDTO) {
         return authorRepository.save(authorDTO);
+    }
+
+    @GetMapping("/author/{id}")
+    public AuthorDTO getAuthorByIdPath(@PathVariable Integer id) {
+        return authorRepository.findById(id).get();
+    }
+
+    @GetMapping("/author")
+    public AuthorDTO getAuthorByNameParam(@RequestParam(name = "name")String name) {
+        return authorRepository.findByNameSQL(name).orElseThrow(() -> AuthorDTONotFoundException(id));
     }
 }
