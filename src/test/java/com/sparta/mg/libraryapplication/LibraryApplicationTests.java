@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,11 +70,11 @@ class LibraryApplicationTests {
     @Test
     @DisplayName("Using Webclient")
     void usingWebclient() {
-        String response = WebClient.create("http://localhost:5000/authors")
+        Mono<String> response = WebClient.create("http://localhost:5000/authors")
                 .get()
                 .retrieve()
-                .toString();
+                .bodyToMono(String.class);
 
-        System.out.println(response);
+        System.out.println(response.block());
     }
 }
